@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="23px" viewBox="0 0 21 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>tds / elements / token / security buttons / green</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="help-/-device-/-component-/-Reset-PIN" transform="translate(-314.000000, -101.000000)">
+            <g id="Group" transform="translate(158.000000, 49.000000)">
+                <g id="help-/-device-/-elements-/-security-buttons-/-green" transform="translate(157.000000, 56.000000)">
+                    <g id="tds-/-elements-/-token-/-security-buttons-/-green" transform="translate(0.000000, -3.600000)">
+                        <ellipse id="Oval" stroke="#FFFFFF" stroke-width="2" fill="#383C42" cx="9.03829787" cy="12.6" rx="9.03829787" ry="9"></ellipse>
+                        <ellipse id="Oval" fill="#1DC19F" cx="9.03829787" cy="12.6" rx="4.51914894" ry="4.5"></ellipse>
+                        <rect id="Rectangle-3" fill="#FFFFFF" x="8.13446809" y="0" width="1.80765957" height="13.5"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
