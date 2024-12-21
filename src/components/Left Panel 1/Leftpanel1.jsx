@@ -6,7 +6,7 @@ const Leftpanel1 = ({ username, setUsername, rememberMe, setRememberMe, handleCo
       <h1 className="text-[#1a1f71] text-2xl mb-4 relative">Log on to Business Internet Banking</h1>
       <p className="text-sm mb-6">
           First time here?{'  '}
-          <a href="#" className="text-[#db0011] hover:underline">
+          <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/user-activation-home" className="text-[#db0011] hover:underline">
               Activate your account
           </a>
       </p>

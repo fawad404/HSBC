@@ -2,7 +2,7 @@ import {React , useState} from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react'
 const Otpwarn = () => {
-    const [otpVisible, setOtpVisible] = useState(false);
+    const [otpVisible, setOtpVisible] = useState(true);
 
     return (
         <div className="w-full">
@@ -11,7 +11,7 @@ const Otpwarn = () => {
                 <h2 className="text-xl font-bold">Never share One-Time Passcodes (OTPs)</h2>
                 <button
                     type="button"
-                    className="text-gray-500 hover:text-gray-700"
+                    className="text-gray-500 hover:text-gray-700 border-l-black border-l-2 pl-4"
                 >
                     <motion.span
                         animate={{ rotate: otpVisible ? 180 : 0 }}

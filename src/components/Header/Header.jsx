@@ -11,14 +11,14 @@ const Header = () => {
                         height={40}
                         className="w-[120px]"
                     />
-                    <div className='flex items-center gap-4 '>
+                    <div className='flex items-center gap-7 '>
                         <div className=' p-2 bg-white rounded-full'>
                             <MessageCircleQuestionIcon className='h-6 w-6 text-black' />
                         </div>
     
                         <a
                             href="#"
-                            className="text-white text-sm hover:underline flex items-center"
+                            className="text-white text-sm hover:underline flex items-center px-4 py-2 bg-[#4d6474] rounded-sm"
                         >
                             Return to business banking
                         </a>
