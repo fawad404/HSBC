@@ -8,16 +8,17 @@ import Rightpanel1 from '../Right panel 1/rightpanel1';
 import Rightpanel2 from '../Right Panel 2/Rightpanel2';
 import Fscs from '../FSCS/Fscs';
 import Header from '../Header/Header';
+
 export default function LoginPage() {
     const [step, setStep] = useState(1);
     const [username, setUsername] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
 
-
     const handleContinue = (e) => {
         e.preventDefault();
         if (username) {
             setStep(2);
+            setUsername(username); // Update the parent state
         }
     };
 
@@ -40,8 +41,6 @@ export default function LoginPage() {
                 {/* Login Container */}
                 <div className="relative z-10 px-4 pt-8">
                     <div className='flex justify-center flex-col items-center gap-6'>
-
-
                         <div className="w-full max-w-[1100px] grid grid-cols-1 md:grid-cols-[2fr_1fr]">
                             {/* Left Panel */}
                             <div className="bg-white p-8 rounded-sm flex flex-col justify-between h-full">
