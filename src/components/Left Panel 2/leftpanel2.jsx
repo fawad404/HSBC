@@ -8,7 +8,7 @@ import Calculator from '../../assets/cal.svg';
 import Security from '../../assets/security.svg';
 
 const userDatabase = {
-  'user1': '+91 123 4567890',
+  'user1': '+92 323 6792924',
   'user2': '+91 987 6543210'
 };
 
