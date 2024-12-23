@@ -29,7 +29,7 @@ const Otpwarn = () => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
                     >
-                        <div className='flex flex-col text-lg text-gray-700 space-y-2 p-6'>
+                        <div className='flex flex-col text-md font-semibold text-gray-700 space-y-2 p-6'>
                             <p>
                                 Recently, we've seen an increase in fraudsters tricking customers into giving them OTPs.
                             </p>

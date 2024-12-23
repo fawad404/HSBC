@@ -23,7 +23,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#3e505d]">
+        <div className="bg-[#3e505d] h-screen overflow-y-auto">
             {/* Header */}
             <Header />
 
@@ -41,9 +41,9 @@ export default function LoginPage() {
                 {/* Login Container */}
                 <div className="relative z-10 px-4 pt-8">
                     <div className='flex justify-center flex-col items-center gap-6'>
-                        <div className="w-full max-w-[1100px] grid grid-cols-1 md:grid-cols-[2fr_1fr]">
+                        <div className="w-full max-w-[1000px] grid grid-cols-1 md:grid-cols-[2fr_1fr] h-[70%]">
                             {/* Left Panel */}
-                            <div className="bg-white p-8 rounded-sm flex flex-col justify-between h-full">
+                            <div className="bg-white p-8  rounded-sm flex flex-col justify-between h-full">
                                 {step === 1 ? (
                                     <>
                                      <Leftpanel1 
@@ -78,7 +78,7 @@ export default function LoginPage() {
                             </div>
                         </div>
                         {/* OTP Warning */}
-                        <div className='flex justify-center bg-white max-w-[1100px] w-full  rounded-sm mb-16'>
+                        <div className='flex justify-center bg-white max-w-[1000px] w-full  rounded-sm mb-8'>
                             {step === 1 && (
                              <Otpwarn />
                             )}

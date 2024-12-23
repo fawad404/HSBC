@@ -13,7 +13,7 @@ export default function WelcomeBanner() {
     const ukTime = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })
     const hour = new Date(ukTime).getHours()
 
-    // Set appropriate greeting based on time
+  
     if (hour >= 5 && hour < 12) {
       setGreeting('Good morning')
     } else if (hour >= 12 && hour < 18) {

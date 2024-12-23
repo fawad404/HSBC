@@ -3,10 +3,13 @@ import Header from '../../components/Dashbooard Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import TransactionsTable from '../../components/TransactionsTable/TransactionsTable'
 import WelcomeBanner from '../../components/WElcome/Welcome'
+import Info from '../../components/MobilebankingInfo/Info'
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
+    <>
+      <Info />
     <div className="flex h-screen bg-gray-100">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -24,6 +27,7 @@ export default function Dashboard() {
         </footer>
       </div>
     </div>
+    </>
   )
 }
 

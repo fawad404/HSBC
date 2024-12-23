@@ -4,7 +4,7 @@ const Rightpanel1 = () => {
     return (
 
         <>
-            <h3 className="font-semibold mb-4">Account help</h3>
+            <h3 className="font-semibold">Account help</h3>
             <ul className="space-y-2 px-6">
                 <li type="disc">
                     <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/recover-username" className="text-[#000] hover:underline">

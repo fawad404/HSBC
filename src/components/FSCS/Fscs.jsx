@@ -2,7 +2,7 @@ import React from 'react'
 import FCSSvg from '../../assets/fcs.svg'
 const Fscs = () => {
     return (
-        <div className="mt-8 pt-8 border-t">
+        <div className="pt-8 border-t">
             <div className='flex space-x-4'>
                 <img
                     src={FCSSvg}
