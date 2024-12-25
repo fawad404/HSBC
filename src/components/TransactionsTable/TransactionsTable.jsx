@@ -100,6 +100,7 @@ export default function TransactionsTable() {
         const ukDate = format(new Date(), 'dd/MM/yyyy');
         doc.setFontSize(9);
         doc.text('Duration: 10/12/2024 - 18/12/2024', pageWidth - padding, 98, { align: 'right' });
+        
         doc.text(`Export Date: ${ukDate}`, pageWidth - padding, 105, { align: 'right' });
 
         // Table headers and data
@@ -112,7 +113,7 @@ export default function TransactionsTable() {
 
         // Add table with exact styling
         doc.autoTable({
-          startY: 110,
+          startY: 115,
           margin: { left: padding, right: padding }, // Add padding to the table
           head: [['Reference Number', 'Deposit Amount', 'Deposit Date', 'Sort Code', 'Account Number']],
           body: tableData,
@@ -138,7 +139,7 @@ export default function TransactionsTable() {
             doc.setFontSize(9);
             doc.setFont('helvetica', 'italic');
             doc.setTextColor(128, 128, 128);
-            doc.text('HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved.', padding, tableHeight + 10);
+            doc.text('HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved.', padding, tableHeight + 17);
           }
         });
 
@@ -234,9 +235,6 @@ export default function TransactionsTable() {
           >
             Clear
           </button>
-        </div>
-        <div className="text-center text-sm text-gray-600">
-          HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved
         </div>
       </div>
     </div>
