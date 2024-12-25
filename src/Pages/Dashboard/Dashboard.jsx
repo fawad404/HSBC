@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Helmet } from 'react-helmet'
 import Header from '../../components/Dashbooard Header/Header'
 import Sidebar from '../../components/Sidebar/Sidebar'
 import TransactionsTable from '../../components/TransactionsTable/TransactionsTable'
@@ -9,6 +10,10 @@ export default function Dashboard() {
 
   return (
     <>
+    <Helmet>
+      <title>Dashboard Business Banking</title>
+      <meta name="description" content="Welcome to the HSBC Dashboard. Manage your transactions and view your account information." />
+    </Helmet>
     <div className="flex h-screen bg-gray-100">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex-1 flex flex-col overflow-hidden">

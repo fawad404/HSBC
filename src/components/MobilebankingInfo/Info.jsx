@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X , InfoIcon } from 'lucide-react';
 const Info = () => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -7,14 +7,12 @@ const Info = () => {
 
   return (
     <div className="flex items-center justify-between bg-gray-100 p-4 shadow-md">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {/* Icon */}
-        <div className="flex items-center justify-center w-8 h-8 bg-red-600 text-white rounded-full">
-          <span className="text-xl font-bold">i</span>
-        </div>
+        <InfoIcon  size={24} className='bg-red-600 text-white rounded-full w-full max-w-6' />
 
         {/* Text */}
-        <p className="text-sm text-gray-800">
+        <p className="text-sm max-sm:text-xs text-gray-800">
           Make convenient, fast and fee-free outward international remittances via the HSBC India Mobile Banking app today.{' '}
           <a
             href="https://www.business.hsbc.uk/en-gb/solutions/business-mobile-banking"

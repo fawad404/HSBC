@@ -43,7 +43,7 @@ export default function WelcomeBanner() {
 
   return (
     <div className="bg-[#171829] text-white p-6 relative rounded-md">
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-start max-sm:flex-col gap-3 ">
         <div>
           <h1 className="text-2xl font-light mb-2">{greeting}</h1>
           <div className="flex items-center gap-2">
@@ -70,7 +70,7 @@ export default function WelcomeBanner() {
       </div>
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-[#333] p-6 rounded-lg shadow-lg text-center w-[40%]">
+          <div className="bg-[#333] p-6 rounded-lg shadow-lg text-center w-[40%] max-sm:w-full max-sm:mx-4">
             <p className="text-white mb-4">
               The request has been forwarded to your Business Account Director for review and approval. Kindly await further confirmation.
             </p>

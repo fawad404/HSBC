@@ -6,7 +6,7 @@ const Rightpanel1 = () => {
         <>
             <h3 className="font-semibold">Account help</h3>
             <ul className="space-y-2 px-6">
-                <li type="disc">
+                <li type="disc" className='text-[#333333]'>
                     <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/recover-username" className="text-[#000] hover:underline">
                         Forgotten your username
                         <ChevronRight className='h-4 w-4 inline-block text-red-600' />
@@ -19,12 +19,12 @@ const Rightpanel1 = () => {
                 Please enter your username to continue if you:
             </p>
             <ul className='text-sm flex flex-col justify-start space-y-2 items-start'>
-                <li>
-                    <span className='text-gray-400'> - </span>
+                <li className='flex justify-center items-center gap-1'>
+                    <span className='text-gray-500'> - </span>
                     need to reset your password
                 </li>
-                <li >
-                    <span className='text-gray-400'> - </span>
+                <li className='flex justify-center items-center gap-1'>
+                    <span className='text-gray-500'> - </span>
                     have a physical Security Device and need to reset your device PIN or order a new device
                 </li>
             </ul>

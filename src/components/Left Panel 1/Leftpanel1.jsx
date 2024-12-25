@@ -3,11 +3,11 @@ import React from 'react'
 const Leftpanel1 = ({ username, setUsername, rememberMe, setRememberMe, handleContinue }) => {
   return (
     <div>
-      <h1 className="text-[#1a1f71] text-2xl mb-4 relative">Log on to Business Internet Banking</h1>
+      <h1 className="text-[#333333] text-2xl mb-4 relative tracking-wider">Log on to Business Internet Banking</h1>
       <p className="text-sm mb-6">
           First time here?{'  '}
-          <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/user-activation-home" className="text-[#db0011] hover:underline">
-              Activate your account
+          <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/user-activation-home" className="hover:text-[#db0011] underline tracking-wide">
+              {'  '}Activate your account
           </a>
       </p>
 
@@ -34,7 +34,7 @@ const Leftpanel1 = ({ username, setUsername, rememberMe, setRememberMe, handleCo
               </label>
           </div>
 
-          <div className="border-t border-gray-600 pt-6  flex justify-end mt-64">
+          <div className="border-t-[0.1rem] border-[#333] pt-6  flex justify-end mt-52">
               <button
                   type="submit"
                   className="bg-[#db0011] text-white px-6 py-2 rounded-sm hover:bg-[#b30d1f] transition-colors"

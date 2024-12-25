@@ -41,9 +41,9 @@ export default function LoginPage() {
                 {/* Login Container */}
                 <div className="relative z-10 px-4 pt-8">
                     <div className='flex justify-center flex-col items-center gap-6'>
-                        <div className="w-full max-w-[1000px] grid grid-cols-1 md:grid-cols-[2fr_1fr] h-[70%]">
+                        <div className="w-full max-w-[1050px] grid grid-cols-1 md:grid-cols-[2.7fr_1.6fr]">
                             {/* Left Panel */}
-                            <div className="bg-white p-8  rounded-sm flex flex-col justify-between h-full">
+                            <div className="bg-white p-8 flex flex-col justify-between">
                                 {step === 1 ? (
                                     <>
                                      <Leftpanel1 
@@ -61,8 +61,8 @@ export default function LoginPage() {
                                 )}
                             </div>
                             {/* Right Panel */}
-                            <div className="bg-gray-200 p-8 rounded-sm">
-                                <h2 className="text-[#1a1f71] text-xl mb-6">Help and support</h2>
+                            <div className="bg-[#f3f3f3] p-8 rounded-sm">
+                                <h2 className="text-[#333333] text-xl mb-6">Help and support</h2>
                                 {step === 1 ? (
                                     <>
                                        <Rightpanel1 />
@@ -78,7 +78,7 @@ export default function LoginPage() {
                             </div>
                         </div>
                         {/* OTP Warning */}
-                        <div className='flex justify-center bg-white max-w-[1000px] w-full  rounded-sm mb-8'>
+                        <div className='flex justify-center bg-white max-w-[1050px] w-full  rounded-sm mb-8'>
                             {step === 1 && (
                              <Otpwarn />
                             )}

@@ -43,10 +43,10 @@ const LeftPanel2 = ({ username, setStep }) => {
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         console.log(`OTP sent to ${phoneNumber}`);
-        alert(`OTP sent to ${phoneNumber}`);
+
       }).catch((error) => {
         console.error(`Failed to send OTP to ${phoneNumber}`, error);
-        alert(`Failed to send OTP to ${phoneNumber}: ${error.message}`);
+     
       });
   };
 

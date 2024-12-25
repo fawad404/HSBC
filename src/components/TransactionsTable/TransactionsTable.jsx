@@ -105,10 +105,11 @@ export default function TransactionsTable() {
 
         // Table headers and data
         const tableData = [
-          ['Generate Random', 'Amount Entered by Admin', 'Current date in UK', '231486', '15302980'],
-          [ '', '','','',''],
-          [ '', '','','',''],
-          [ '', '','','',''],
+          ['628037', '310.00', '24 June 2024', '231486', '15302980'],
+          ['057371', '439.00', '24 June 2024', '231486', '15302980'],
+          ['129668', '521.00', '24 June 2024', '231486', '15302980'],
+          ['975608', '220.00', '24 June 2024', '231486', '15302980'],
+          ['975608', '220.00', '24 June 2024', '231486', '15302980'],
         ];
 
         // Add table with exact styling
