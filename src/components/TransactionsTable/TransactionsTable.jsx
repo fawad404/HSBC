@@ -3,6 +3,7 @@ import { format, parse, isWithinInterval } from 'date-fns'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import logo from '../../assets/pdf-logo.svg'
+import autoTable from 'jspdf-autotable'
 
 const initialTransactions = [
   { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 628037', amount: 310, levy: 33.17 },
@@ -52,30 +53,43 @@ export default function TransactionsTable() {
 
   const exportToPDF = () => {
     const doc = new jsPDF();
-  
 
     convertSvgToDataUrl((dataUrl) => {
       try {
-      
-        doc.addImage(dataUrl, 'PNG', 14, 20, 30, 12);
-  
-        // Adjusted header position to align with logo
-        doc.setFontSize(20);
-        doc.setTextColor(219, 16, 79); // HSBC brand color
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const padding = 25; // Add padding to the left and right
+
+        const logoWidth = 30;
+        const logoHeight = 10;
+        const totalWidth = logoWidth + doc.getTextWidth('HSBC UK Bank Limited');
+        const logoX = (pageWidth - totalWidth) / 2;
+        doc.addImage(dataUrl, 'PNG', logoX, 14, logoWidth, logoHeight);
+
+        doc.setFontSize(18);
+        doc.setTextColor(0,0,0);
         doc.setFont('helvetica', 'bold');
-        doc.text('HSBC UK Bank Limited', 30, 27); 
-  
-        // Add subheader with personal and account details
-        doc.setFontSize(12);
+        doc.text('HSBC UK Bank ', 75, 17);
+        doc.text('Limited', 75 , 25)
+
+        // Add address under header
+        doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(0, 0, 0);
-        doc.text('Customer Name: AHMAD ASRAR', 14, 50);
-        doc.text('Address: 10A Cranley Parade, SE9 4DZ', 14, 57);
-        doc.text('Sort Code: 231486', 14, 64);
-        doc.text('Account Number: 15302980', 14, 71);
-  
+        doc.text('1 Centenary Square, Birmingham, B1 1HQ',75, 30);
 
-  
+
+        doc.setFontSize(20);
+        doc.setFont('helvetica', 'bold');
+        doc.text('WALLET BALANCE STATEMENT', pageWidth / 2, 50, { align: 'center' });
+
+        // Add customer details
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        doc.text('AHMAD ASRAR - 10A Cranley Parade, SE9 4DZ', padding, 70);
+        doc.text('Sort Code: 231486', padding, 80);
+        doc.text('Account number: 15302980', padding, 90);
+
         // Add export date and time on the right with UK timezone
         const ukTime = new Date().toLocaleString('en-GB', {
           timeZone: 'Europe/London',
@@ -84,61 +98,68 @@ export default function TransactionsTable() {
           minute: '2-digit',
         });
         const ukDate = format(new Date(), 'dd/MM/yyyy');
-        doc.setFontSize(10);
-        doc.text(`Export Date: ${ukDate}`, doc.internal.pageSize.width - 70, 78);
-        doc.text('Duration: 10/12/2024 - 18/12/2024', doc.internal.pageSize.width - 70, 85);
-  
-        // Format table data
-        const tableData = filteredTransactions.map((transaction) => [
-          transaction.description.split(': ')[1],
-          `$${transaction.amount.toFixed(2)}`,
-          transaction.transferDate,
-        ]);
-  
-        // Add table with styling and adjusted position
+        doc.setFontSize(9);
+        doc.text(`Export Date: ${ukDate}`, pageWidth - padding, 98, { align: 'right' });
+        doc.text('Duration: 10/12/2024 - 18/12/2024', pageWidth - padding, 105, { align: 'right' });
+
+        // Table headers and data
+        const tableData = [
+          ['Generate Random', 'Amount Entered by Admin', 'Current date in UK', '231486', '15302980'],
+          [ '', '','','',''],
+          [ '', '','','',''],
+          [ '', '','','',''],
+        ];
+
+        // Add table with exact styling
         doc.autoTable({
-          startY: 90,
-          head: [['Reference Number', 'Deposit Amount', 'Deposit Date', 'DTL (10.7%)']],
-          body: tableData.map(row => [...row, `$${filteredTransactions[tableData.indexOf(row)].levy.toFixed(2)}`]),
-          theme: 'striped',
-          headStyles: { fillColor: [219, 16, 79], textColor: [255, 255, 255] },
-          styles: { fontSize: 10, cellPadding: 3 },
-          bodyStyles: { textColor: [0, 0, 0] },
+          startY: 110,
+          margin: { left: padding, right: padding }, // Add padding to the table
+          head: [['Reference Number', 'Deposit Amount', 'Deposit Date', 'Sort Code', 'Account Number']],
+          body: tableData,
+          theme: 'grid',
+          headStyles: {
+            fillColor: [255 , 255 , 255],
+            textColor: [0, 0, 0],
+          },
+          styles: {
+            fontSize: 11,
+            cellPadding: 1,
+            lineColor: [0, 0, 0], // Black borders
+            lineWidth: 0.1,
+          },
+          alternateRowStyles: {
+            fillColor: [255, 255, 255], // Light gray for alternate rows
+          },
+          bodyStyles: {
+            textColor: [0, 0, 0], // Black text
+          },
+          didDrawPage: (data) => {
+            const tableHeight = data.cursor.y;
+            doc.setFontSize(9);
+            doc.setFont('helvetica', 'italic');
+            doc.setTextColor(128, 128, 128);
+            doc.text('HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved.', padding, tableHeight + 10);
+          }
         });
-  
-        // Add totals section
-        const finalY = doc.lastAutoTable.finalY || 90;
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text(`Total Amount: $${totalAmount.toFixed(2)}`, 14, finalY + 10);
-        doc.text(`Total Levy: $${totalLevy.toFixed(2)}`, 14, finalY + 20);
-  
-        // Add footer
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'italic');
-        doc.setTextColor(128, 128, 128);
-        doc.text(
-          'HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved.',
-          14,
-          doc.internal.pageSize.height - 10
-        );
-  
-        // Save PDF
-        doc.save('HSBC-transactions.pdf');
+
+        // Footer
+        // const footerY = pageHeight - 10;
+        // doc.setFontSize(9);
+        // doc.setFont('helvetica', 'italic');
+        // doc.setTextColor(128, 128, 128); // Gray text for footer
+        // doc.text(
+        //   'HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved.',
+        //   padding,
+        //   footerY
+        // );
+
+        // Save the PDF
+        doc.save('Wallet-Balance-Statement.pdf');
       } catch (error) {
-        console.error('Error adding logo to PDF:', error);
-  
-        // Handle PDF generation without logo
-        doc.setFontSize(20);
-        doc.setTextColor(219, 16, 79);
-        doc.setFont('helvetica', 'bold');
-        doc.text('HSBC UK Bank Limited', 14, 25);
-        doc.save('HSBC-transactions.pdf');
+        console.error('Error generating the PDF:', error);
       }
     });
   };
-  
 
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden mt-8">

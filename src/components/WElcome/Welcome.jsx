@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Eye, EyeOff, RefreshCcw } from 'lucide-react'
-import toast from 'react-hot-toast'
 
 export default function WelcomeBanner() {
   const [greeting, setGreeting] = useState('')
   const [lastLogin, setLastLogin] = useState('')
   const [showBalance, setShowBalance] = useState(true)
+  const [showPopup, setShowPopup] = useState(false)
   const balance = '£2,547.83'
 
   useEffect(() => {
@@ -38,31 +38,7 @@ export default function WelcomeBanner() {
 
   const handleRefresh = async () => {
     console.log('Sending refresh request to admin...')
-    
-    toast.dismiss()
-    
-    toast.custom((t) => (
-      <div className={`${
-        t.visible ? 'animate-enter' : 'animate-leave'
-      } max-w-md w-full bg-[#333] shadow-lg rounded-lg pointer-events-auto flex flex-col items-center`}>
-        <div className="flex-1 w-full p-4">
-          <div className="flex flex-col items-center">
-            <div className="text-white text-center">
-              The request has been forwarded to your Business Account Director for review and approval. Kindly await further confirmation
-            </div>
-            <button
-              onClick={() => toast.dismiss(t.id)}
-              className="mt-4 px-4 py-2 bg-[#DB104F] text-white rounded-md hover:bg-[#83000A] transition-colors"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    ), {
-      duration: Infinity,
-      position: 'top-center',
-    })
+    setShowPopup(true)
   }
 
   return (
@@ -92,6 +68,21 @@ export default function WelcomeBanner() {
           Last logged in on {lastLogin}
         </div>
       </div>
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-[#333] p-6 rounded-lg shadow-lg text-center w-[40%]">
+            <p className="text-white mb-4">
+              The request has been forwarded to your Business Account Director for review and approval. Kindly await further confirmation.
+            </p>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="px-4 py-2 bg-[#DB104F] text-white rounded-md hover:bg-[#83000A] transition-colors"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

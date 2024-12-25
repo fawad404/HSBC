@@ -9,10 +9,10 @@ export default function Dashboard() {
 
   return (
     <>
-      <Info />
     <div className="flex h-screen bg-gray-100">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex-1 flex flex-col overflow-hidden">
+      <Info />
         <Header toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           <div className="px-6 py-8">
