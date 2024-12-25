@@ -60,7 +60,7 @@ export default function TransactionsTable() {
         const pageHeight = doc.internal.pageSize.getHeight();
         const padding = 25; // Add padding to the left and right
 
-        const logoWidth = 30;
+        const logoWidth = 50;
         const logoHeight = 10;
         const totalWidth = logoWidth + doc.getTextWidth('HSBC UK Bank Limited');
         const logoX = (pageWidth - totalWidth) / 2;
@@ -99,8 +99,8 @@ export default function TransactionsTable() {
         });
         const ukDate = format(new Date(), 'dd/MM/yyyy');
         doc.setFontSize(9);
-        doc.text(`Export Date: ${ukDate}`, pageWidth - padding, 98, { align: 'right' });
-        doc.text('Duration: 10/12/2024 - 18/12/2024', pageWidth - padding, 105, { align: 'right' });
+        doc.text('Duration: 10/12/2024 - 18/12/2024', pageWidth - padding, 98, { align: 'right' });
+        doc.text(`Export Date: ${ukDate}`, pageWidth - padding, 105, { align: 'right' });
 
         // Table headers and data
         const tableData = [
