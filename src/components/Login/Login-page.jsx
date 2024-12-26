@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import login from '../../assets/login.jpg';
 import Footer from '../Footer/Footer';
 import Otpwarn from '../Otp/Otp-warn';
@@ -13,6 +13,15 @@ export default function LoginPage() {
     const [step, setStep] = useState(1);
     const [username, setUsername] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 3000); // 3 seconds
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleContinue = (e) => {
         e.preventDefault();
@@ -21,6 +30,21 @@ export default function LoginPage() {
             setUsername(username); // Update the parent state
         }
     };
+
+    if (loading) {
+        return (
+            <div className="bg-[#f3f3f3] h-screen flex flex-col">
+                <Header />
+                <div className="flex-grow flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="loader border-t-4 border-black rounded-full w-12 h-12 animate-spin"></div>
+                        <p className="text-gray-700 mt-4">Loading</p>
+                    </div>
+                </div>
+                <Footer />
+            </div>
+        );
+    }
 
     return (
         <div className="bg-[#3e505d] h-screen overflow-y-auto">
