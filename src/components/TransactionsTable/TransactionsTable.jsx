@@ -78,7 +78,6 @@ export default function TransactionsTable() {
         doc.setTextColor(0, 0, 0);
         doc.text('1 Centenary Square, Birmingham, B1 1HQ',75, 30);
 
-
         doc.setFontSize(20);
         doc.setFont('helvetica', 'bold');
         doc.text('WALLET BALANCE STATEMENT', pageWidth / 2, 50, { align: 'center' });
@@ -99,18 +98,17 @@ export default function TransactionsTable() {
         });
         const ukDate = format(new Date(), 'dd/MM/yyyy');
         doc.setFontSize(9);
-        doc.text('Duration: 10/12/2024 - 18/12/2024', pageWidth - padding, 98, { align: 'right' });
-        
+        doc.text(`Duration: ${startDate} - ${endDate}`, pageWidth - padding, 98, { align: 'right' });
         doc.text(`Export Date: ${ukDate}`, pageWidth - padding, 105, { align: 'right' });
 
         // Table headers and data
-        const tableData = [
-          ['628037', '310.00', '24 June 2024', '231486', '15302980'],
-          ['057371', '439.00', '24 June 2024', '231486', '15302980'],
-          ['129668', '521.00', '24 June 2024', '231486', '15302980'],
-          ['975608', '220.00', '24 June 2024', '231486', '15302980'],
-          ['975608', '220.00', '24 June 2024', '231486', '15302980'],
-        ];
+        const tableData = filteredTransactions.map(transaction => [
+          transaction.description.split(': ')[1],
+          transaction.amount.toFixed(2),
+          transaction.transferDate,
+          '231486',
+          '15302980'
+        ]);
 
         // Add table with exact styling
         doc.autoTable({
@@ -144,17 +142,6 @@ export default function TransactionsTable() {
           }
         });
 
-        // Footer
-        // const footerY = pageHeight - 10;
-        // doc.setFontSize(9);
-        // doc.setFont('helvetica', 'italic');
-        // doc.setTextColor(128, 128, 128); // Gray text for footer
-        // doc.text(
-        //   'HSBC Group | © Copyright HSBC Group 2002-2024. All rights reserved.',
-        //   padding,
-        //   footerY
-        // );
-
         // Save the PDF
         doc.save('Wallet-Balance-Statement.pdf');
       } catch (error) {
@@ -182,7 +169,7 @@ export default function TransactionsTable() {
           />
           <button
             onClick={filterTransactions}
-            className="bg-[#DB104F] text-white px-4 py-2  hover:bg-[#83000A] w-full lg:w-auto"
+            className="bg-[#db0011] text-white px-4 py-2  hover:bg-[#af000d] w-full lg:w-auto"
           >
             Filter
           </button>
@@ -221,13 +208,13 @@ export default function TransactionsTable() {
       <div className="flex flex-col p-4 lg:p-6 bg-gray-50">
         <div className="flex justify-between mb-4">
           <button 
-            className="bg-[#DB104F] text-white px-3 lg:px-4 py-2 hover:bg-[#83000A] text-sm"
+            className="bg-[#db0011] text-white px-3 lg:px-4 py-2 hover:bg-[#af000d] text-sm"
             onClick={exportToPDF}
           >
             Export
           </button>
           <button 
-            className="bg-[#DB104F] text-white px-3 lg:px-4 py-2 hover:bg-[#83000A] text-sm"
+            className="bg-[#db0011] text-white px-3 lg:px-4 py-2 hover:bg-[#af000d] text-sm"
             onClick={() => {
               setStartDate('')
               setEndDate('')

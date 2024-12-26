@@ -37,16 +37,16 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <nav className="flex-1 overflow-y-auto">
           <ul className="p-4 space-y-2">
             {menuItems.map((item, index) => (
-              <li key={index}>
+              <li key={index} className='group'>
                 <a 
                   href={item.href} 
                   onClick={() => setActiveTab(item.text)}
                   className="flex items-center space-x-2 rounded p-2"
                 >
-                <div className={`${activeTab === item.text ? 'bg-[#83000A] shadow-[1.5px_0.33px_16px_0px_rgba(192,192,192,0.3)]' : ''} transition-all duration-200 p-2 rounded-md `}>
+                <div className={`${activeTab === item.text ? 'bg-[#db0011] group-hover:bg-[#af000d] shadow-[1.5px_0.33px_16px_0px_rgba(192,192,192,0.3)]' : ''} transition-all duration-200 p-2 rounded-md `}>
                   <item.icon size={20} />
                 </div>
-                  <span className='hover:text-[#83000A] transition-colors duration-300'>{item.text}</span>
+                  <span className='group-hover:text-[#db0011] transition-colors duration-300'>{item.text}</span>
                 </a>
               </li>
             ))}
