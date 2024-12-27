@@ -49,8 +49,8 @@ const ManageCards = () => {
   return (
     <div className="">
 
-    <div className='flex justify-center items-center text-white p-6 relative rounded-md bg-[#171829] mt-8 mb-8'>
-      <h1 className="text-4xl font-bold mb-8 text-center">Manage Your Cards</h1>
+    <div className='flex justify-center items-center text-white p-6 relative rounded-md bg-[#171829] mt-2 mb-8'>
+      <h1 className="text-4xl font-normal text-center">Manage Your Cards</h1>
     </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
