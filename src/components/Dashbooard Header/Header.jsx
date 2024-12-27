@@ -16,7 +16,7 @@ export default function Header({ toggleSidebar }) {
                 <li>NI number# TH542549T</li>
             </ul> */}
         <div className='flex flex-col space-y-2'>
-          <h1 className="text-2xl lg:text-3xl font-semibold text-gray-800">Corporate Banking Portal</h1>
+          <h1 className="text-2xl lg:text-3xl font-normal text-gray-900">Corporate Banking Portal</h1>
           <p className="text-sm lg:text-base text-gray-600">SMART ENERGY EFFICIENT SOLUTIONS LTD</p>
           <p className="text-sm lg:text-base text-gray-600">Private limited Company - 14826884</p>
         </div>
