@@ -2,7 +2,7 @@ import React from 'react'
 
 const Leftpanel1 = ({ username, setUsername, rememberMe, setRememberMe, handleContinue }) => {
   return (
-    <div>
+    <div className='md:ml-6'>
       <h1 className="text-[#333333] text-2xl mb-4 relative tracking-wider">Log on to Business Internet Banking</h1>
       <p className="text-sm mb-6">
           First time here?{'  '}
