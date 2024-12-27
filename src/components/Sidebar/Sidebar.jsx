@@ -22,7 +22,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
   ]
 
   const handleLinkClick = (e, href) => {
-    if (href === '/dashboard' || href === '/dashboard/manage-cards' || href === '/simply-invest') {
+    if (href === '/dashboard' || href === '/dashboard/manage-cards') {
       setActiveTab(href);
     } else {
       e.preventDefault();
