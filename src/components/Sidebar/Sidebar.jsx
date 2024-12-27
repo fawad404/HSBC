@@ -69,7 +69,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-[#333] p-6 rounded-lg shadow-lg text-center w-[40%] max-sm:w-full max-sm:mx-4">
             <p className="text-white mb-4">
-              You are not allowed to visit there, the request for approval has been transmitted.
+            Access request has been sent to your Business Account Director. Please wait for approval. 
             </p>
             <button
               onClick={() => setShowPopup(false)}
