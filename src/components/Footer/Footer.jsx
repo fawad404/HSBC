@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white text-sm font-sans p-8 mt-8">
+    <footer className="bg-black text-white text-sm font-sans p-8">
     <div className=" mx-auto flex flex-wrap gap-4">
         <a href="https://www.business.hsbc.uk/en-gb/regulations/legal-information" className="hover:underline flex items-center">
             HSBC UK Customer Legal Information and Privacy Notice
