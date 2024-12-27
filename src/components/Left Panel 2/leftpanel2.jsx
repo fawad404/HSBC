@@ -60,11 +60,11 @@ const LeftPanel2 = ({ username, setStep }) => {
       confirmationResult.confirm(otp).then((result) => {
         let user = result.user;
         console.log('OTP verified successfully', user);
-        alert('User signed in successfully');
+       
         navigate('/dashboard');
       }).catch((error) => {
         console.error('Failed to verify OTP', error);
-        alert(`Failed to verify OTP: ${error.message}`);
+       
       });
     }
   };
