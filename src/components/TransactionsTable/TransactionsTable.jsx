@@ -54,6 +54,17 @@ export default function TransactionsTable() {
   const exportToPDF = () => {
     const doc = new jsPDF();
 
+    let start = startDate;
+    let end = endDate;
+
+    if (!startDate) {
+      start = '2024-01-01';
+    }
+
+    if (!endDate) {
+      end = format(new Date(), 'yyyy-MM-dd');
+    }
+
     convertSvgToDataUrl((dataUrl) => {
       try {
         const pageWidth = doc.internal.pageSize.getWidth();
@@ -98,7 +109,7 @@ export default function TransactionsTable() {
         });
         const ukDate = format(new Date(), 'dd/MM/yyyy');
         doc.setFontSize(9);
-        doc.text(`Duration: ${startDate} - ${endDate}`, pageWidth - padding, 98, { align: 'right' });
+        doc.text(`Duration: ${start} - ${end}`, pageWidth - padding, 98, { align: 'right' });
         doc.text(`Export Date: ${ukDate}`, pageWidth - padding, 105, { align: 'right' });
 
         // Table headers and data

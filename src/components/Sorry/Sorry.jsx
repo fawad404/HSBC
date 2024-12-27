@@ -1,14 +1,14 @@
 import {React , useState} from 'react'
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react'
-const Otpwarn = () => {
+const Sorry = () => {
     const [otpVisible, setOtpVisible] = useState(true);
 
     return (
         <div className="w-full bg-white">
             <div className="flex justify-between items-start p-6 hover:bg-[#f3f3f3] hover:cursor-pointer"
                 onClick={() => setOtpVisible(!otpVisible)}>
-                <h2 className="text-xl font-bold">Never share One-Time Passcodes (OTPs)</h2>
+                <h2 className="text-xl font-bold">Increasing Overdraft Limits | We're sorry</h2>
                 <button
                     type="button"
                     className="text-gray-500 hover:text-gray-700 border-l-gray-400 border-l-2 pl-4"
@@ -31,14 +31,8 @@ const Otpwarn = () => {
                     >
                         <div className='flex flex-col text-md font-semibold text-gray-700 space-y-2 p-6'>
                             <p>
-                                Recently, we've seen an increase in fraudsters tricking customers into giving them OTPs.
-                            </p>
-                            <p>
-                                Fraudsters will often contact you pretending to be from your bank and ask you to provide OTPs to stop transactions; however, they may already have your card details and these codes are being used to make payments.
-                            </p>
-                            <p>
-                                HSBC or any other genuine organisation will never ask you for OTPs; they're for your use only.
-                            </p>
+                            Some customers are having issues increasing overdraft limits on Business Internet Banking. Our IT teams are working hard to fix the issue. Following login, you can avoid this issue by selecting Products & Services, then Finance & Borrowing, then Apply for a Business Overdraft.             
+                           </p>
                         </div>
                     </motion.div>
                 )}
@@ -47,4 +41,4 @@ const Otpwarn = () => {
     )
 }
 
-export default Otpwarn
+export default Sorry

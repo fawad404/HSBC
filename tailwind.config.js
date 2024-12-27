@@ -20,6 +20,9 @@ export default {
         enter: 'enter 200ms ease-out',
         leave: 'leave 150ms ease-in forwards',
       },
+      fontFamily: {
+        hsbc: ['"Univers Next for HSBC W02 Rg"', 'sans-serif'],
+      },
     },
   },
   plugins: [],

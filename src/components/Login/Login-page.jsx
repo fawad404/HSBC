@@ -8,6 +8,7 @@ import Rightpanel1 from '../Right panel 1/rightpanel1';
 import Rightpanel2 from '../Right Panel 2/Rightpanel2';
 import Fscs from '../FSCS/Fscs';
 import Header from '../Header/Header';
+import Sorry from '../Sorry/Sorry';
 
 export default function LoginPage() {
     const [step, setStep] = useState(1);
@@ -64,8 +65,8 @@ export default function LoginPage() {
 
                 {/* Login Container */}
                 <div className="relative z-10 px-4 pt-8">
-                    <div className='flex justify-center flex-col items-center gap-6'>
-                        <div className="w-full max-w-[1050px] grid grid-cols-1 md:grid-cols-[2.7fr_1.6fr]">
+                    <div className='flex justify-center flex-col items-center gap-3'>
+                        <div className="w-full max-w-[1050px] grid grid-cols-1 md:grid-cols-[2.7fr_1.6fr] mt-20">
                             {/* Left Panel */}
                             <div className="bg-white p-8 flex flex-col justify-between">
                                 {step === 1 ? (
@@ -102,9 +103,12 @@ export default function LoginPage() {
                             </div>
                         </div>
                         {/* OTP Warning */}
-                        <div className='flex justify-center bg-white max-w-[1050px] w-full  rounded-sm mb-8'>
+                        <div className='flex justify-center  max-w-[1050px] w-full  rounded-sm'>
                             {step === 1 && (
+                             <div className='flex justify-center flex-col bg-gray-50/15  max-w-[1050px] w-full  rounded-sm mb-8 space-y-[1px]'>
+                             <Sorry />
                              <Otpwarn />
+                             </div>
                             )}
                         </div>
                     </div>

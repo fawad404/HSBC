@@ -14,7 +14,7 @@ export default function Dashboard() {
       <title>Dashboard Business Banking</title>
       <meta name="description" content="Welcome to the HSBC Dashboard. Manage your transactions and view your account information." />
     </Helmet>
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 font-hsbc">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
       <div className="flex-1 flex flex-col overflow-hidden">
       <Info />
