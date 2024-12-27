@@ -2,21 +2,33 @@ import { CheckSquare, Zap , CircleDollarSign, ArrowUpCircle, Monitor, CreditCard
 import { useState } from 'react'
 import logo from '../../assets/logo.svg'
 import { File } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+
 export default function Sidebar({ isOpen, setIsOpen }) {
-  const [activeTab, setActiveTab] = useState('Ahmad Asrar')
-  
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.pathname);
+  const [showPopup, setShowPopup] = useState(false);
+
   const menuItems = [
-    { icon: UserRoundCheck, text: 'Ahmad Asrar', href: '#' },
-    { icon : File , text: 'File Your Returns' , href:'#'},
-    { icon: CircleDollarSign, text: 'Simply Invest', href: '#' },
-    { icon: CheckSquare, text: 'Invest Bill pay', href: '#' },
-    { icon: ArrowUpCircle, text: 'Pay and Transfer', href: '#' },
-    { icon: Monitor, text: 'Open fixed Deposit', href: '#' },
-    { icon: Zap, text: 'Mutual Funds', href: '#' },
-    { icon: CreditCard, text: 'Statements and certificates', href: '#' },
-    { icon: Users2, text: 'Nomination', href: '#' }
+    { icon: UserRoundCheck, text: 'Ahmad Asrar', href: '/dashboard' },
+    { icon : File , text: 'Manage Your Cards' , href:'/dashboard/manage-cards'},
+    { icon: CircleDollarSign, text: 'Simply Invest', href: '/simply-invest' },
+    { icon: CheckSquare, text: 'Invest Bill pay', href: '/invest-bill-pay' },
+    { icon: ArrowUpCircle, text: 'Pay and Transfer', href: '/pay-and-transfer' },
+    { icon: Monitor, text: 'Open fixed Deposit', href: '/open-fixed-deposit' },
+    { icon: Zap, text: 'Mutual Funds', href: '/mutual-funds' },
+    { icon: CreditCard, text: 'Statements and certificates', href: '/statements-certificates' },
+    { icon: Users2, text: 'Nomination', href: '/nomination' }
   ]
+
+  const handleLinkClick = (e, href) => {
+    if (href === '/dashboard' || href === '/dashboard/manage-cards' || href === '/simply-invest') {
+      setActiveTab(href);
+    } else {
+      e.preventDefault();
+      setShowPopup(true);
+    }
+  };
 
   return (
     <div className={`${isOpen ? 'fixed inset-0' : 'hidden'} w-[75%] md:w-[40%] lg:block lg:w-72 bg-[#171829] text-white border-r border-[#ffffff12] z-50`}>
@@ -38,21 +50,36 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           <ul className="p-4 space-y-2">
             {menuItems.map((item, index) => (
               <li key={index} className='group'>
-                <a 
-                  href={item.href} 
-                  onClick={() => setActiveTab(item.text)}
+                <Link 
+                  to={item.href} 
+                  onClick={(e) => handleLinkClick(e, item.href)}
                   className="flex items-center space-x-2 rounded p-2"
                 >
-                <div className={`${activeTab === item.text ? 'bg-[#db0011] group-hover:bg-[#af000d] shadow-[1.5px_0.33px_16px_0px_rgba(192,192,192,0.3)]' : ''} transition-all duration-200 p-2 rounded-md `}>
+                <div className={`${activeTab === item.href ? 'bg-[#db0011] group-hover:bg-[#af000d] shadow-[1.5px_0.33px_16px_0px_rgba(192,192,192,0.3)]' : ''} transition-all duration-200 p-2 rounded-md `}>
                   <item.icon size={20} />
                 </div>
                   <span className='group-hover:text-[#db0011] transition-colors duration-300'>{item.text}</span>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
       </div>
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-[#333] p-6 rounded-lg shadow-lg text-center w-[40%] max-sm:w-full max-sm:mx-4">
+            <p className="text-white mb-4">
+              You are not allowed to visit there, the request for approval has been transmitted.
+            </p>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="px-4 py-2 bg-[#DB104F] text-white rounded-md hover:bg-[#83000A] transition-colors"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
