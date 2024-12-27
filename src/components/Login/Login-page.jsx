@@ -66,7 +66,7 @@ export default function LoginPage() {
                 {/* Login Container */}
                 <div className="relative z-10 px-4 pt-8">
                     <div className='flex justify-center flex-col items-center gap-3'>
-                        <div className="w-full max-w-[1050px] grid grid-cols-1 md:grid-cols-[2.7fr_1.6fr] mt-20">
+                        <div className="w-full max-w-[1050px] grid grid-cols-1 md:grid-cols-[2.7fr_1.6fr] mt-10">
                             {/* Left Panel */}
                             <div className="bg-white p-8 flex flex-col justify-between">
                                 {step === 1 ? (

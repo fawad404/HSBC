@@ -4,17 +4,17 @@ const Rightpanel1 = () => {
     return (
 
         <>
-            <h3 className="font-semibold">Account help</h3>
+            <h3 className="font-semibold text-sm text-black">Account help</h3>
             <ul className="space-y-2 px-6">
                 <li type="disc" className='text-[#333333]'>
-                    <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/recover-username" className="text-[#000] hover:underline">
+                    <a href="https://online-banking.business.hsbc.co.uk/portalserver/hsbc/recover-username" className="text-[#000] text-sm hover:underline">
                         Forgotten your username
                         <ChevronRight className='h-4 w-4 inline-block text-red-600' />
                     </a>
                 </li>
             </ul>
 
-            <h3 className="font-semibold mt-6 mb-4">Password and device help</h3>
+            <h3 className="font-semibold text-sm mt-4 mb-4">Password and device help</h3>
             <p className="text-sm mb-4">
                 Please enter your username to continue if you:
             </p>
