@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CreditCard, ChevronRight, Plus, Eye, EyeOff } from 'lucide-react';
 
 
@@ -21,6 +22,7 @@ const Button = ({ children, className, ...props }) => (
 );
 
 const ManageCards = () => {
+  const navigate = useNavigate();
   const [cards, setCards] = useState([
     { id: 1, number: "1265 7896 3658 75", cvv: "675", expiry: "06/26", isVisible: false, link: "#" },
     { id: 2, number: "4532 8721 9012 3456", cvv: "123", expiry: "09/25", isVisible: false, link: "#" },
@@ -58,7 +60,7 @@ const ManageCards = () => {
           <Card
             key={card.id}
             className="group relative overflow-hidden bg-gradient-to-br from-white to-gray-50 hover:shadow-2xl transition-all duration-500 ease-out hover:-translate-y-2 cursor-pointer perspective-1000"
-            onClick={() => window.location.href = card.link}
+            onClick={() => navigate(`/dashboard/manage-cards/${card.id}`)}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-[#db0011]/10 via-transparent to-[#db0011]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <div className="p-6 relative transform transition-transform duration-500 group-hover:rotate-y-12">
