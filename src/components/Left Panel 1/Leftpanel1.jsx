@@ -23,6 +23,14 @@ const Leftpanel1 = ({ username, setUsername, rememberMe, setRememberMe, handleCo
           </div>
 
           <div className="mb-6">
+              <label className="block text-sm mb-2">Password</label>
+              <input
+                  type="password"
+                  className="p-2 border border-gray-300 focus:border-[#1a1f71] outline-none"
+              />
+          </div>
+
+          <div className="mb-6">
               <label className="flex items-center space-x-2">
                   <input
                       type="checkbox"

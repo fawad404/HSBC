@@ -16,6 +16,7 @@ const LeftPanel2 = ({ username, setStep }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,16 +38,17 @@ const LeftPanel2 = ({ username, setStep }) => {
   };
 
   const sendOtp = (phoneNumber) => {
+    setIsLoading(true);
     generateRecaptcha();
     let appVerifier = window.recaptchaVerifier;
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         console.log(`OTP sent to ${phoneNumber}`);
-
+        setIsLoading(false);
       }).catch((error) => {
         console.error(`Failed to send OTP to ${phoneNumber}`, error);
-     
+        setIsLoading(false);
       });
   };
 
@@ -90,7 +92,12 @@ const LeftPanel2 = ({ username, setStep }) => {
             className="p-2 mt-2 border border-gray-300 focus:border-[#1a1f71] outline-none"
             value={otp}
             onChange={verifyOtp}
+            disabled={isLoading}
+            placeholder={isLoading ? "Sending OTP..." : "Enter OTP"}
           />
+          {isLoading && (
+            <p className="text-sm text-gray-500 mt-2">Please wait while we verify your device...</p>
+          )}
           <div className="w-full mt-4">
             <div className="flex justify-start items-start cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}>

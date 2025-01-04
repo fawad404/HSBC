@@ -180,7 +180,7 @@ export default function CardsTransactions({ cardDetails }) {
 
         // Update table headers and data structure
         const tableData = filteredTransactions.map(transaction => [
-          transaction.description.split(': ')[1],
+          transaction.Reference,
           transaction.transferDate,
           transaction.description,
           `$${transaction.amount.toFixed(2)}`

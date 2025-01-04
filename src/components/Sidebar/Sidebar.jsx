@@ -9,8 +9,18 @@ export default function Sidebar({ isOpen, setIsOpen }) {
   const [activeTab, setActiveTab] = useState(location.pathname);
   const [showPopup, setShowPopup] = useState(false);
 
+  const UserInfo = () => {
+    return (
+      <div className="flex flex-col items-start justify-center space-y-1 text-sm">
+        <p>Ahmad Asrar</p>
+        <p>H23 Oak Street, London, SE1</p>
+        <p>Ni Numebr: 1234567</p>
+
+      </div>
+    )
+  }
   const menuItems = [
-    { icon: UserRoundCheck, text: 'Ahmad Asrar', href: '/dashboard' },
+    { icon: UserRoundCheck, text: <UserInfo />, href: '/dashboard' },
     { icon : File , text: 'Manage Your Cards' , href:'/dashboard/manage-cards'},
     { icon: CircleDollarSign, text: 'Simply Invest', href: '/simply-invest' },
     { icon: CheckSquare, text: 'Invest Bill pay', href: '/invest-bill-pay' },
