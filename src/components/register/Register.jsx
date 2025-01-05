@@ -26,7 +26,7 @@ const Register = () => {
   
   const [user] = useAuthState(auth);
   if(user){
-    console.log("user logged in");
+    console.log("user logged in", user);
   }
 
   const handleLogout = async () => {
