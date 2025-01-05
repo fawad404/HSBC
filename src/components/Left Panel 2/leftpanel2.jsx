@@ -73,7 +73,7 @@ const LeftPanel2 = ({ username, setStep }) => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <h1 className="text-[#1a1f71] text-2xl">Hello {username}</h1>
+      <h1 className="text-[#1a1f71] text-2xl">Security Check</h1>
       <p className="text-sm">
         Not {username}?{' '}
         <button

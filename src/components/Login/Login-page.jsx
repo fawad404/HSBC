@@ -9,6 +9,7 @@ import Rightpanel2 from '../Right Panel 2/Rightpanel2';
 import Fscs from '../FSCS/Fscs';
 import Header from '../Header/Header';
 import Sorry from '../Sorry/Sorry';
+import Leftpass from '../Left Pass/Leftpass';
 
 export default function LoginPage() {
     const [step, setStep] = useState(1);
@@ -27,9 +28,12 @@ export default function LoginPage() {
     const handleContinue = (e) => {
         e.preventDefault();
         if (username) {
-            setStep(2);
-            setUsername(username); // Update the parent state
+            setStep(2); // This now goes to password step
         }
+    };
+
+    const handlePasswordSubmit = () => {
+        setStep(3);
     };
 
     if (loading) {
@@ -70,19 +74,21 @@ export default function LoginPage() {
                             {/* Left Panel */}
                             <div className="bg-white p-8 flex flex-col justify-between">
                                 {step === 1 ? (
-                                    <>
-                                     <Leftpanel1 
+                                    <Leftpanel1 
                                         username={username}
                                         setUsername={setUsername}
                                         rememberMe={rememberMe}
                                         setRememberMe={setRememberMe}
                                         handleContinue={handleContinue}
-                                     />
-                                    </>
+                                    />
+                                ) : step === 2 ? (
+                                    <Leftpass 
+                                        username={username} 
+                                        setStep={setStep}
+                                        onSubmit={handlePasswordSubmit}
+                                    />
                                 ) : (
-                                    <>
-                                       <Leftpanel2 username={username} setStep={setStep} />
-                                    </>
+                                    <Leftpanel2 username={username} setStep={setStep} />
                                 )}
                             </div>
                             {/* Right Panel */}
