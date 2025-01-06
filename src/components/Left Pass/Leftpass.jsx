@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Leftpass = ({ username, setStep, onSubmit }) => {
-    const [password, setPassword] = useState('');
+const Leftpass = ({ username, setStep, onSubmit, setPassword , password , passwordError}) => {
+   
     const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (e) => {
@@ -28,19 +28,20 @@ const Leftpass = ({ username, setStep, onSubmit }) => {
                     <label className="block text-sm mb-2">Password</label>
                     <div className="relative">
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className=" p-2 border border-gray-300 focus:border-[#1a1f71] outline-none"
                             required
                         />
-                        <button
+                         <p className='text-red-800 mt-2'>{passwordError}</p>
+                        {/* <button
                             type="button"
                             className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-gray-600"
                             onClick={() => setShowPassword(!showPassword)}
                         >
                             {showPassword ? 'Hide' : 'Show'}
-                        </button>
+                        </button> */}
                     </div>
                 </div>
 
