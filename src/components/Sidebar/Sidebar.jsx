@@ -3,8 +3,11 @@ import { useState } from 'react'
 import logo from '../../assets/logo.svg'
 import { File } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
+import useAuthStore from '../../stores'
 
 export default function Sidebar({ isOpen, setIsOpen }) {
+  const { authUser } = useAuthStore(); 
+  console.log(authUser.user.username);
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(location.pathname);
   const [showPopup, setShowPopup] = useState(false);
@@ -12,7 +15,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
   const UserInfo = () => {
     return (
       <div className="flex flex-col items-start justify-center space-y-1 text-sm">
-        <p>Ahmad Asrar</p>
+        <p>{authUser?.user?.username}</p>
         <p>H23 Oak Street, London, SE1</p>
         <p>Ni Numebr: 1234567</p>
 

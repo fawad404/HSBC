@@ -7,7 +7,7 @@ import logo from '../../assets/pdf-logo.svg'
 import autoTable from 'jspdf-autotable'
 
 const transactionsByCard = {
-  1: [
+  '677c4b5171f69ff109617a03': [
     { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Shopify', Reference: ' 628037', amount: 310.50, levy: 33.17 },
     { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Shopify', Reference: ' 057371', amount: 439.00, levy: 46.87 },
     { transferDate: '23 June 2024', postingDate: '24 June 2024', description: 'Shopify', Reference: ' 129668', amount: 521.75, levy: 55.75 },
@@ -45,7 +45,7 @@ const getAllTransactions = () => {
     .slice(0, 10);
 };
 
-export default function CardsTransactions({ cardDetails }) {
+export default function CardsTransactions({ cardDetails, cardUser  }) {
   const { id } = useParams();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -151,16 +151,18 @@ export default function CardsTransactions({ cardDetails }) {
         // Add customer details with null check
         doc.setFontSize(11);
         doc.setFont('helvetica', 'normal');
-        doc.text('AHMAD ASRAR ', padding, 70);
-        doc.text('10A Cranley Parade, SE9 4DZ', padding, 80);
+        if (cardDetails) {
+          doc.text(`${cardUser }`, padding, 70);
+          doc.text(`${cardDetails.address}`, padding, 80);
+        }
 
         let startY = 115; // Default startY without card details
 
         // Only add card details if they exist
         if (cardDetails) {
-          doc.text(`Card Number: ${cardDetails.number}`, padding, 90);
+          doc.text(`Card Number: ${cardDetails.cardNumber}`, padding, 90);
           doc.text(`CVV: ${cardDetails.cvv}`, padding, 100);
-          doc.text(`Expiry: ${cardDetails.expiry}`, padding, 110);
+          doc.text(`Expiry: ${cardDetails.dd}/${cardDetails.mm}`, padding, 110);
           startY = 130; // Adjust startY when card details are present
         }
 
