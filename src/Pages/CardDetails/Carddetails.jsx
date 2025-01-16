@@ -19,7 +19,7 @@ export default function CardDetails() {
   useEffect(() => {
     if (!id) return;
 
-    // Access the cards directly
+  
     const cards = authUser?.user?.cards || [];
     
     // Find the card with the matching id
