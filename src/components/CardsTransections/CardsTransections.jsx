@@ -1,94 +1,109 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { format, parse, isWithinInterval } from 'date-fns'
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
-import logo from '../../assets/pdf-logo.svg'
-import autoTable from 'jspdf-autotable'
+import { format, parse, isWithinInterval } from 'date-fns';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import logo from '../../assets/pdf-logo.svg';
 
-const transactionsByCard = {
-  '677c4b5171f69ff109617a03': [
-    { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Shopify', Reference: ' 628037', amount: 310.50, levy: 33.17 },
-    { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Shopify', Reference: ' 057371', amount: 439.00, levy: 46.87 },
-    { transferDate: '23 June 2024', postingDate: '24 June 2024', description: 'Shopify', Reference: ' 129668', amount: 521.75, levy: 55.75 },
-    { transferDate: '23 June 2024', postingDate: '24 June 2024', description: 'Shopify', Reference: ' 975608', amount: 220.00, levy: 23.54 },
-    { transferDate: '22 June 2024', postingDate: '23 June 2024', description: 'Shopify', Reference: ' 217381', amount: 391.50, levy: 41.89 },
-    { transferDate: '22 June 2024', postingDate: '23 June 2024', description: 'Shopify', Reference: ' 231663', amount: 370.25, levy: 39.59 },
-    { transferDate: '21 June 2024', postingDate: '22 June 2024', description: 'Shopify', Reference: ' 171836', amount: 816.00, levy: 87.31 },
-    { transferDate: '21 June 2024', postingDate: '22 June 2024', description: 'Shopify', Reference: ' 778001', amount: 184.50, levy: 19.69 },
-    { transferDate: '20 June 2024', postingDate: '21 June 2024', description: 'Shopify', Reference: ' 445291', amount: 629.99, levy: 67.41 },
-    { transferDate: '20 June 2024', postingDate: '21 June 2024', description: 'Shopify', Reference: ' 662154', amount: 445.25, levy: 47.64 },
-    { transferDate: '19 June 2024', postingDate: '20 June 2024', description: 'Shopify', Reference: ' 334789', amount: 937.50, levy: 100.31 },
-    { transferDate: '19 June 2024', postingDate: '20 June 2024', description: 'Shopify', Reference: ' 112456', amount: 273.75, levy: 29.29 },
-    { transferDate: '18 June 2024', postingDate: '19 June 2024', description: 'Shopify', Reference: ' 998877', amount: 556.25, levy: 59.52 },
-    { transferDate: '18 June 2024', postingDate: '19 June 2024', description: 'Shopify', Reference: ' 445566', amount: 182.50, levy: 19.53 },
-    { transferDate: '17 June 2024', postingDate: '18 June 2024', description: 'Shopify', Reference: ' 778899', amount: 729.99, levy: 78.11 }
-  ],
-  2: [
-    { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Shopify', Reference: ' 334455', amount: 445.50, levy: 47.67 },
-    // ...add more transactions here
-  ],
-  3: [
-    { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Shopify', Reference: ' 112233', amount: 667.25, levy: 71.40 },
-    // ...add more transactions here
-  ],
-};
-
-const getAllTransactions = () => {
-  return Object.values(transactionsByCard)
-    .flat()
-    .sort((a, b) => {
-      const dateA = new Date(a.transferDate);
-      const dateB = new Date(b.transferDate);
-      return dateB - dateA;
-    })
-    .slice(0, 10);
-};
-
-export default function CardsTransactions({ cardDetails, cardUser  }) {
+export default function CardsTransactions({ cardDetails, cardUser }) {
   const { id } = useParams();
+  const [cardNumber, setCardNumber] = useState(null); // Set initial state to null or undefined
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [transactions, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const getRecentTransactions = () => {
-    const transactions = id 
-      ? transactionsByCard[id] || []
-      : Object.values(transactionsByCard).flat();
-    
-    return transactions
-      .sort((a, b) => new Date(b.transferDate) - new Date(a.transferDate))
-      .slice(0, 10);
+  // Fetch transactions dynamically from the API
+  const fetchTransactions = async () => {
+    if (cardNumber) {
+      try {
+        setLoading(true);
+        const response = await fetch('https://hsbc-backend.vercel.app/api/v1/transections/detail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            cardNumber: cardNumber, // Ensure cardNumber is available
+          }),
+        });
+        const data = await response.json();
+        const transactions = data.transections || [];
+        setTransactions(transactions);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    }
   };
 
-  useEffect(() => {
-    setFilteredTransactions(getRecentTransactions());
-  }, [id]);
-
+  // Filter transactions based on the selected date range
   const filterTransactions = () => {
     if (!startDate || !endDate) {
-
-      const transactions = id 
-        ? (transactionsByCard[id] || []).slice(0, 10)
-        : getAllTransactions();
-      setFilteredTransactions(transactions);
+      const transactionsToShow = transactions
+        .filter(transaction => (id ? transaction.cardNumber === id : true))
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 10);
+      setFilteredTransactions(transactionsToShow);
       return;
     }
 
-    const transactions = id 
-      ? (transactionsByCard[id] || [])
-      : Object.values(transactionsByCard).flat();
-
     const filtered = transactions.filter(transaction => {
-      const date = parse(transaction.transferDate, 'd MMMM yyyy', new Date());
-      return isWithinInterval(date, {
+      const transactionDate = parse(transaction.date, 'MMM dd, yyyy', new Date());
+      return isWithinInterval(transactionDate, {
         start: parse(startDate, 'yyyy-MM-dd', new Date()),
         end: parse(endDate, 'yyyy-MM-dd', new Date())
       });
     });
-
     setFilteredTransactions(filtered);
   };
+
+  // Run the effect to fetch card number and transactions when 'id' or 'cardDetails' changes
+  useEffect(() => {
+    if (cardDetails?.cardNumber) {
+      setCardNumber(cardDetails.cardNumber);
+    }
+  }, [cardDetails]);
+
+  // Fetch transactions when cardNumber is set
+  useEffect(() => {
+    if (cardNumber) {
+      fetchTransactions();
+    }
+  }, [cardNumber]);
+
+  // Fetch transactions when 'id' changes
+  useEffect(() => {
+    filterTransactions();
+  }, [transactions, startDate, endDate, id]);
+
+  // const filterTransactions = () => {
+  //   if (!startDate || !endDate) {
+
+  //     const transactions = id 
+  //       ? (transactionsByCard[id] || []).slice(0, 10)
+  //       : getAllTransactions();
+  //     setFilteredTransactions(transactions);
+  //     return;
+  //   }
+
+  //   const transactions = id 
+  //     ? (transactionsByCard[id] || [])
+  //     : Object.values(transactionsByCard).flat();
+
+  //   const filtered = transactions.filter(transaction => {
+  //     const date = parse(transaction.transferDate, 'd MMMM yyyy', new Date());
+  //     return isWithinInterval(date, {
+  //       start: parse(startDate, 'yyyy-MM-dd', new Date()),
+  //       end: parse(endDate, 'yyyy-MM-dd', new Date())
+  //     });
+  //   });
+
+  //   setFilteredTransactions(filtered);
+  // };
 
   const totalAmount = filteredTransactions.reduce((sum, transaction) => sum + transaction.amount, 0)
   const totalLevy = filteredTransactions.reduce((sum, transaction) => sum + transaction.levy, 0)
@@ -265,15 +280,15 @@ export default function CardsTransactions({ cardDetails, cardUser  }) {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredTransactions.map((transaction, index) => (
-                <tr key={index}>
-                  <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.Reference}</td>
-                  <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.transferDate}</td>
-                  <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-green-600">{transaction.description}</td>
-                  <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-blue-600">${transaction.amount.toFixed(2)}</td>
-                </tr>
-              ))}
-            </tbody>
+                {transactions.map((transaction, index) => (
+                  <tr key={index}>
+                    <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.referenceNumber}</td>
+                    <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.date}</td>
+                    <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-green-600">{transaction.description}</td>
+                    <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-blue-600">{transaction.amount.toFixed(2)} {transaction.currency}</td>
+                  </tr>
+                ))}
+              </tbody>
             {/* <tfoot>
               <tr className="bg-gray-50">
                 <td colSpan={3} className="px-3 lg:px-6 py-2 lg:py-4 text-right font-semibold text-sm">Total Amount (GBP)</td>
