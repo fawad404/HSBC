@@ -1,38 +1,62 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { format, parse, isWithinInterval } from 'date-fns'
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
 import logo from '../../assets/pdf-logo.svg'
 import autoTable from 'jspdf-autotable'
 
-const initialTransactions = [
-  { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 628037', amount: 310, levy: 33.17 },
-  { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 057371', amount: 439, levy: 46.873 },
-  { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 129668', amount: 521, levy: 55.747 },
-  { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 975608', amount: 220, levy: 23.54 },
-  { transferDate: '25 June 2024', postingDate: '26 June 2024', description: 'Reference: 217381', amount: 391.50, levy: 41.8905 },
-  { transferDate: '26 June 2024', postingDate: '27 June 2024', description: 'Reference: 231663', amount: 370, levy: 39.59 },
-  { transferDate: '27 June 2024', postingDate: '28 June 2024', description: 'Reference: 171836', amount: 816, levy: 87.312 },
-  { transferDate: '27 June 2024', postingDate: '28 June 2024', description: 'Reference: 778001', amount: 184, levy: 19.688 },
-]
+// const initialTransactions = [
+//   { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 628037', amount: 310, levy: 33.17 },
+//   { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 057371', amount: 439, levy: 46.873 },
+//   { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 129668', amount: 521, levy: 55.747 },
+//   { transferDate: '24 June 2024', postingDate: '25 June 2024', description: 'Reference: 975608', amount: 220, levy: 23.54 },
+//   { transferDate: '25 June 2024', postingDate: '26 June 2024', description: 'Reference: 217381', amount: 391.50, levy: 41.8905 },
+//   { transferDate: '26 June 2024', postingDate: '27 June 2024', description: 'Reference: 231663', amount: 370, levy: 39.59 },
+//   { transferDate: '27 June 2024', postingDate: '28 June 2024', description: 'Reference: 171836', amount: 816, levy: 87.312 },
+//   { transferDate: '27 June 2024', postingDate: '28 June 2024', description: 'Reference: 778001', amount: 184, levy: 19.688 },
+// ]
 
-export default function TransactionsTable() {
+export default function TransactionsTable({ user }) {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
-  const [filteredTransactions, setFilteredTransactions] = useState(initialTransactions)
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    
+    const fetchTransactions = async () => {
+      
+        try {
+          setLoading(true);
+          const response = await fetch(`https://hsbc-backend.vercel.app/api/v1/accounts/${user}`);
+           
+          const data = await response.json();
+         // const transactions = data.transections || [];
+         setFilteredTransactions(data.accounts);
+          setLoading(false);
+        } catch (error) {
+          setError(error.message);
+          setLoading(false);
+        }
+      
+    };
+      fetchTransactions();
+    
+  }, []);
+
+  console.log(filteredTransactions? filteredTransactions : []);
 
   const filterTransactions = () => {
     if (!startDate || !endDate) return
 
-    const filtered = initialTransactions.filter(transaction => {
-      const date = parse(transaction.transferDate, 'd MMMM yyyy', new Date())
+    const filtered = filteredTransactions.filter(transaction => {
+      const date = parse(transaction.formattedDate, 'd MMMM yyyy', new Date())
       return isWithinInterval(date, {
         start: parse(startDate, 'yyyy-MM-dd', new Date()),
         end: parse(endDate, 'yyyy-MM-dd', new Date())
       })
     })
 
-    setFilteredTransactions(filtered)
+    setFilteredTransactions(filtered);
   }
 
   // const totalAmount = filteredTransactions.reduce((sum, transaction) => sum + transaction.amount, 0)
@@ -116,9 +140,9 @@ export default function TransactionsTable() {
 
         // Table headers and data
         const tableData = filteredTransactions.map(transaction => [
-          transaction.description.split(': ')[1],
+          transaction._id.slice(-6),
           transaction.amount.toFixed(2),
-          transaction.transferDate,
+          transaction.formattedDate,
           '231486',
           '15302980'
         ]);
@@ -202,9 +226,9 @@ export default function TransactionsTable() {
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredTransactions.map((transaction, index) => (
                 <tr key={index}>
-                  <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.description.split(': ')[1]}</td>
+                  <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction._id.slice(-6)}</td>
                   <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-blue-600">${transaction.amount.toFixed(2)}</td>
-                  <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.transferDate}</td>
+                  <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.formattedDate}</td>
                   <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-green-600">231486</td>
                   <td className="px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">15302980</td>
                 </tr>
@@ -233,7 +257,7 @@ export default function TransactionsTable() {
             onClick={() => {
               setStartDate('')
               setEndDate('')
-              setFilteredTransactions(initialTransactions)
+              setFilteredTransactions(filteredTransactions)
             }}
           >
             Clear

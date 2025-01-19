@@ -282,7 +282,7 @@ export default function CardsTransactions({ cardDetails, cardUser }) {
             <tbody className="bg-white divide-y divide-gray-200">
                 {transactions.map((transaction, index) => (
                   <tr key={index}>
-                    <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.referenceNumber}</td>
+                    <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.referenceNumber.slice(-6)}</td>
                     <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm">{transaction.date}</td>
                     <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-green-600">{transaction.description}</td>
                     <td className="w-1/4 px-3 lg:px-6 py-2 lg:py-4 whitespace-nowrap text-sm text-blue-600">{transaction.amount.toFixed(2)} {transaction.currency}</td>
