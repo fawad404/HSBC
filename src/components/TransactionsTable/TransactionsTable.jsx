@@ -30,7 +30,7 @@ export default function TransactionsTable({ user }) {
           const response = await fetch(`https://hsbc-backend.vercel.app/api/v1/accounts/${user}`);
            
           const data = await response.json();
-         // const transactions = data.transections || [];
+         
          setFilteredTransactions(data.accounts);
           setLoading(false);
         } catch (error) {
